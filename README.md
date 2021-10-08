@@ -9,4 +9,4 @@ MONGODB_PASSWORD=myPassword
 SMS_USERNAME=myOtherUsername
 SMS_PASSWORD=myOtherPassword
  ```
- - For starting the developer backend server, run `cd ./backend && npm install && npx nodemon index`.
+ - For starting backend development server, run `cd ./backend && npm install && npx nodemon index`.
