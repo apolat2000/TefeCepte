@@ -1,0 +1,1 @@
+Please locate the flutter project directly in this directory.
