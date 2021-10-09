@@ -4,23 +4,25 @@ const User = mongoose.model("Users");
 
 exports.read_loans_of_user = (req, res) => {
   const _idUser = req.user._id;
-  const givenLoans = [];
-  Loan.find({ giver: _idUser }, (err, loans) => {
+  let givenLoans = [];
+  let receivedLoans = [];
+  Loan.find({ giver: _idUser }, (err, loansGiver) => {
     if (err) {
       res.send(err);
       return;
     }
-    givenLoans = loans;
+    givenLoans = loansGiver;
+
+    Loan.find({ receiver: _idUser }, (err, loansReceiver) => {
+      if (err) {
+        res.send(err);
+        return;
+      }
+      receivedLoans = loansReceiver;
+    });
+    res.status(200).send({ givenLoans, receivedLoans });
   });
-  const receivedLoans = [];
-  Loan.find({ receiver: _idUser }, (err, loans) => {
-    if (err) {
-      res.send(err);
-      return;
-    }
-    receivedLoans = loans;
-  });
-  res.status(200).send({ givenLoans, receivedLoans });
+  
 };
 
 exports.read_a_loan = (req, res) => {
