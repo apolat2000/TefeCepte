@@ -5,8 +5,8 @@ const usersSchema = new Schema({
   firstName: { type: String },
   lastName: { type: String },
   phoneNumber: { type: String, unique: true },
-  givenLoans: [{ type: Schema.Types.ObjectId, ref: "Laons" }], //foreign key
-  receivedLoans: [{ type: Schema.Types.ObjectId, ref: "Laons" }], //foreign key
+  // givenLoans: [{ type: Schema.Types.ObjectId, ref: "Loans" }], //foreign key
+  // receivedLoans: [{ type: Schema.Types.ObjectId, ref: "Loans" }], //foreign key
   profilePicturePath: { type: String },
 });
 
