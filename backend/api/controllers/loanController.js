@@ -22,7 +22,6 @@ exports.read_loans_of_user = (req, res) => {
     });
     res.status(200).send({ givenLoans, receivedLoans });
   });
-  
 };
 
 exports.read_a_loan = (req, res) => {
@@ -62,7 +61,6 @@ exports.receive_a_loan = (req, res) => {
   });
   loan.save((err, loan) => {
     if (err) res.send(err);
-    console.log("_id " + loan._id);
     res.status(200).send({ successful: true, _idLoan: loan._id });
   });
 };
@@ -70,9 +68,7 @@ exports.receive_a_loan = (req, res) => {
 exports.give_a_loan = (req, res) => {
   const _idOfRequestingUser = req.user._id;
   const _idLoan = req.params._idLoan;
-  console.log(req.file);
   if (!req.file) {
-    console.log("hey");
     res.status(400).send({ message: "Must upload a selfie!" });
     return;
   }
@@ -84,7 +80,6 @@ exports.give_a_loan = (req, res) => {
   };
   Loan.findByIdAndUpdate(_idLoan, loanAmend, { new: true }, (err, loan) => {
     if (err) res.send({ err, found: false });
-    console.log(loan);
     if (!loan)
       res.send({ found: false, message: `No loan with _id ${_idLoan} found.` });
     res

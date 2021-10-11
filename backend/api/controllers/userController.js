@@ -16,8 +16,6 @@ function sendVerificationSMS(phoneNumber, verificationCode) {
     now.substring(0, 10) + " " + now.substring(11, 16)
   }</GONDERIM_TARIH><BASLIK>BEHLULBOZAL</BASLIK></BILGI><ISLEM><YOLLA><MESAJ>${verificationCode}</MESAJ><NO>${phoneNumber}</NO></YOLLA></ISLEM>`;
 
-  console.log(body);
-
   const postRequest = {
     host: "www.cenkarbilisim.net",
     path: "/services/api.php?islem=sms",
@@ -87,14 +85,12 @@ exports.create_verification_code = (req, res) => {
 exports.delete_session = (req, res) => {
   const token = req.headers.token;
   const phoneNumberOfRequestingUser = req.user.phoneNumber;
-  console.log(phoneNumberOfRequestingUser);
   if (!token) {
     res.status(400).send({ message: "Expected route parameter: token." });
     return;
   }
   Verification.deleteOne({ token, phone: phoneNumberOfRequestingUser }).then(
     (del) => {
-      console.log(del.deletedCount);
       if (del.deletedCount !== 1) {
         res
           .status(404)
@@ -107,7 +103,6 @@ exports.delete_session = (req, res) => {
 };
 
 exports.update_a_user = (req, res) => {
-  console.log(req.user);
   const _id = req.params._id;
   if (!_id) {
     res.status(400).send({ message: "Expected _id as route parameter." });

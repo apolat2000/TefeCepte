@@ -31,7 +31,6 @@ exports.verify_code = (req, res) => {
       return;
     }
     const verificationCreatedAt = ver.createdAt;
-    console.log(verificationCreatedAt);
     const diff = Date.now() - verificationCreatedAt;
     if (diff > 120000) {
       // if more than 120 seconds
@@ -44,7 +43,6 @@ exports.verify_code = (req, res) => {
         return;
       }
       const token = crypto.randomBytes(30).toString("hex");
-      console.log(token);
       Verification.findOneAndUpdate(
         { phone: reqPhone, code: reqCode },
         { token, alreadyVerified: true },
