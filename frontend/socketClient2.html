@@ -8,6 +8,7 @@
   </head>
 
   <body>
+    <ul id="locations"></ul>
     <script
       src="https://cdn.socket.io/4.2.0/socket.io.min.js"
       integrity="sha384-PiBR5S00EtOj2Lto9Uu81cmoyZqR57XcOna1oAuVuIEjzj0wpqDVfD0JA9eXlRsj"
@@ -16,15 +17,23 @@
     <script>
       const socket = io("http://localhost:3000", {
         extraHeaders: {
-          token: "8537ce353286467d97e15d52978681fa23b9767d65791618aa439b3201b4",
+          token: "5aa5255dc449d6ed743012cbb3342dd52b93d79a675b7559712db0fd25c1",
         },
       });
       socket.on("hello", () => {
         console.log("world");
       });
+
+      const ulLocations = document.getElementById("locations");
       const emitLoc = () => {
         socket.emit("location", { x: Math.random(), y: Math.random() });
+        console.log("Emitted location.");
       };
+      socket.on("location", (location) => {
+        const li = document.createElement("li");
+        li.innerHTML = `x: ${location.x}, y: ${location.y}`;
+        ulLocations.appendChild(li);
+      });
       const sendLocInterval = setInterval(emitLoc, 1000);
     </script>
   </body>
