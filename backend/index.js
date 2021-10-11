@@ -5,6 +5,7 @@ const { createServer } = require("http");
 const { Server } = require("socket.io");
 const dotenv = require("dotenv");
 global.schemas = require("./api/models/schemas");
+const Loan = mongoose.model("Loans");
 const routes = require("./api/routes/routes");
 const auth = require("./api/middlewares/authentication");
 dotenv.config();
@@ -45,6 +46,19 @@ io.on("connection", (socket) => {
   console.log(`User ${_id} connected`);
   socket.join(_id);
   console.log(`User ${_id} joined the allocated room.`);
+
+  Loan.find({ receiver: _id }, (err, loans) => {
+    if (err) {
+      res.send(err);
+      return;
+    }
+    console.log(loans);
+    socket.on("location", (location) => {
+      loans.forEach((l) => {
+        socket.to(String(l.giver)).emit("location", location);
+      });
+    });
+  });
 });
 
 httpServer.listen(port);
