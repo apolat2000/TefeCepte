@@ -118,7 +118,7 @@ exports.update_a_user = (req, res) => {
   const userObject = {
     firstName: req.body.firstName || "",
     lastName: req.body.lastName || "",
-    profilePicturePath: req.body.profilePicturePath || "",
+    profilePicturePath: req.file.path || "",
   };
   User.findOneAndUpdate(
     { _id: _idOfRequestingUser },

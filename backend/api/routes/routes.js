@@ -5,7 +5,7 @@ const authenticationController = require("../controllers/authenticationControlle
 
 const multer = require("multer");
 
-const ppFilter = (req, file, cb) => {
+const imageFilter = (req, file, cb) => {
   if (
     file.mimetype === "image/jpeg" ||
     file.mimetype === "image/png" ||
@@ -34,20 +34,8 @@ const uploadPp = multer({
   limits: {
     fileSize: 1024 * 1024 * 5, //5mb
   },
-  ppFilter,
+  imageFilter,
 });
-
-const selfieFilter = (req, file, cb) => {
-  if (
-    file.mimetype === "image/jpeg" ||
-    file.mimetype === "image/png" ||
-    file.mimetype === "image/jpg"
-  ) {
-    cb(null, true);
-  } else {
-    cb(null, false);
-  }
-};
 
 const selfieStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -66,7 +54,7 @@ const uploadSelfie = multer({
   limits: {
     fileSize: 1024 * 1024 * 5, //5mb
   },
-  selfieFilter,
+  imageFilter,
 });
 
 module.exports = (app, guard) => {
@@ -79,7 +67,7 @@ module.exports = (app, guard) => {
   app
     .route("/user/:_id")
     .get(guard, userController.read_a_user)
-    .put(guard, userController.update_a_user);
+    .put(guard, uploadPp.single("profilePhoto"), userController.update_a_user);
 
   app.route("/verify/:code/:phone").post(verificationController.verify_code);
 
