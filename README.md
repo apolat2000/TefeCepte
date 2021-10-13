@@ -15,6 +15,9 @@ SMS_PASSWORD=myOtherPassword
 ## Disclaimer
 This project is from beginning planned as an absurd joke. It doesn't offer a real life use case and strictly dissuades such usage.
 
+## Caveats
+The authentication mechanism is far from good in terms of security. It is yet practical, but penetrable. Don't hesitate to reconceptualize that aspect of this project.
+
 ## Software Topics
 
 ### Used Technologies
